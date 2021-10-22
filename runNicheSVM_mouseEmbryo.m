@@ -1,19 +1,15 @@
 %%%%%%%%%%%%% Load MATLAB file %%%%%%%%%%%%%
 load 'mouseEmbryoPIC.mat'
-% 1. 'cell_id' - 33034 single cells + PICs
-% 2. 'gene_name' - 2000 genes
-% 3. 'log_data' - 2000 by 33034
-% 4. 'clustering6color' - 33034 cells
-% 5. 'clustering6name' - 33034 cells
-% 6. 'clustering6name_unique' - 6 cell types
-% 7. 'clustering8color' - 33034 cells
-% 8. 'clustering8name' - 33034 cells
-% 9. 'clustering8name_unique' - 8 cell types
-% 10. 'clustering13color' - 33034 cells
-% 11. 'clustering13name' - 33034 cells
+% 1. 'cell_id' - 6288 single cells
+% 2. 'cell_id_total' - 6288 single cells + 367 PICs
+% 3. 'gene_name' - 1608 genes
+% 4. 'log_data' - 1608 by 6288 single cells
+% 5. 'log_data_total' - 1608 by 6288 single cells + 367 PICs
+% 10. 'clustering13color' - clustering number for 6288 single cells
+% 11. 'clustering13name' - cell typ names for 6288 single cells
 % 12. 'clustering13name_unique' - 13 cell types
-% 13. 'singletsIndex' - 33034 Boolean memberships for single cells
-% 13. 'doubletsIndex' - 33034 Boolean memberships for PICs
+% 13. 'singletsIndex' - 6655 Boolean memberships for single cells
+% 13. 'doubletsIndex' - 6655 Boolean memberships for PICs
 
 %%%%%%%%%%%%% Calculating z-value %%%%%%%%%%%%%
 log_data_zvalue=(log_data-repmat(mean(log_data,2),1,size(log_data,2)))./repmat(std(log_data')',1,size(log_data,2));
