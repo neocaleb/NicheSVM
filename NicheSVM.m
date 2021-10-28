@@ -1,4 +1,4 @@
-function [bestMatch,artificialDoubletsCombiUnique]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering,clusterSelect,clustering_name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber)
+function [bestMatch,artificialDoubletsCombiUnique,SVMcl]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering,clusterSelect,clustering_name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber)
 
 %%%%%%%%%%%%% 1) make artificial doublets %%%%%%%%%%%%%
 clusterSize=size(pvalue_total,1);

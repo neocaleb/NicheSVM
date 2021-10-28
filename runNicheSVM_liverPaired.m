@@ -10,6 +10,22 @@ load 'liver_paired.mat'
 % 8. 'singletsIndex' - 8939 Boolean memberships for single cells
 % 9. 'doubletsIndex' - 8939 Boolean memberships for PICs
 gene_name=gene_name_total;
+%%%%%%%%%%%%% gene filter %%%%%%%%%%%%%
+ERCCindex=zeros(size(gene_name));
+for i=1:size(gene_name,1)
+    if size(gene_name{i},2)>3
+        if sum(gene_name{i}(1:4)=='ERCC')==4
+            ERCCindex(i)=1;
+        end
+    end
+end
+ERCCindex=ERCCindex==1;
+
+existCutoff=0.01;
+existIndex=sum(log_data_total(:,singletsIndex)>1,2)>sum(singletsIndex)*existCutoff&sum(log_data_total(:,doubletsIndex)>1,2)>sum(doubletsIndex)*existCutoff;
+
+log_data_total=log_data_total(existIndex&~ERCCindex,:);
+gene_name=gene_name(existIndex&~ERCCindex);
 %%%%%%%%%%%%% Calculating z-value %%%%%%%%%%%%%
 log_data=log_data_total(:,singletsIndex);
 
@@ -24,11 +40,11 @@ log_data_doublets_zvalue(isnan(log_data_doublets_zvalue))=0;
 folderName='liverPaired';
 %%%%%%%%%%%%% 1) DEG by clustering 8 %%%%%%%%%%%%%
 clusterSize=max(clustering8color);
-[pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering8color);
-save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+% [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering8color);
+% save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
-clusterSelect=1:8;
+clusterSelect=1:7;
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.5;
 DEGindex=zeros(size(gene_name,1),clusterSize);
@@ -46,25 +62,26 @@ save([folderName,'/SVM_bestMatch.mat'],'bestMatch','artificialDoubletsCombiUniqu
 %%% Draw heatmap
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 load([folderName,'/SVM_bestMatch.mat'])
-clusterSelect=1:8;
+clusterSelect=1:7;
 outputFile=[folderName,'/heatmap_PICSVM_top5DEG.pdf'];
 pCutoff=0.01;lrCutoff=0.5;
 DEGnumber=5;
 drawHeatmap_PICSVM(outputFile,bestMatch,artificialDoubletsCombiUnique,clusterSelect,clustering8name_unique,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,gene_name,DEGnumber);
 
 %%%%%%%%%%%%% 3) DEG between PICs and artificial doublets %%%%%%%%%%%%%
-clusterSelect=1:8;
-seedNumber=1;randSize=10000;
-minCell=5;
-[pvalue_total,fdr_total,logRatio_total]=DEG_PIC_vs_AD(bestMatch,seedNumber,randSize,clustering8color,clusterSelect,log_data_zvalue,clustering8name_unique,log_data_doublets_zvalue,minCell);
-save([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'],'pvalue_total','fdr_total','logRatio_total')
-
-outputFolder=folderName;
-load([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'])
-pvalue_totalPIC_AD=pvalue_total;
-logRatio_totalPIC_AD=logRatio_total;
-load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
-pCutoff=0.01;lrCutoff=0.5;
-DEGnumber=5;DEGnumberPIC_AD=20;
-drawHeatmap_PIC_vs_AD(outputFolder,bestMatch,artificialDoubletsCombiUnique,clustering8color,clusterSelect,clustering8name_unique,log_data_zvalue,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name,DEGnumber,DEGnumberPIC_AD);
+% load([folderName,'/SVM_bestMatch.mat'])
+% clusterSelect=1:8;
+% seedNumber=1;randSize=10000;
+% minCell=5;
+% [pvalue_total,fdr_total,logRatio_total]=DEG_PIC_vs_AD(bestMatch,seedNumber,randSize,clustering8color,clusterSelect,log_data_zvalue,clustering8name_unique,log_data_doublets_zvalue,minCell);
+% save([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'],'pvalue_total','fdr_total','logRatio_total')
+% 
+% outputFolder=folderName;
+% load([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'])
+% pvalue_totalPIC_AD=pvalue_total;
+% logRatio_totalPIC_AD=logRatio_total;
+% load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
+% pCutoff=0.01;lrCutoff=0.5;
+% DEGnumber=5;DEGnumberPIC_AD=20;
+% drawHeatmap_PIC_vs_AD(outputFolder,bestMatch,artificialDoubletsCombiUnique,clustering8color,clusterSelect,clustering8name_unique,log_data_zvalue,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name,DEGnumber,DEGnumberPIC_AD);
 

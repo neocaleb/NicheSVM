@@ -32,7 +32,7 @@ load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=10000;
 DEGnumber=5;
-[bestMatch,artificialDoubletsCombiUnique]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber);
+[bestMatch,artificialDoubletsCombiUnique,~]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber);
 save([folderName,'/SVM_bestMatch.mat'],'bestMatch','artificialDoubletsCombiUnique')
 
 %%% Draw heatmap
