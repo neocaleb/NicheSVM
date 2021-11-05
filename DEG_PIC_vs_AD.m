@@ -16,7 +16,6 @@ for bestMatchIndex=1:bestMatchSize
     pvalue=ones(size(log_data_zvalue,1),1);
     fdr=ones(size(log_data_zvalue,1),1);
     logRatio=zeros(size(log_data_zvalue,1),1);
-    zvalue=zeros(size(log_data_zvalue,1),1);
     if size(heteroIndex,2)>=minCell
         for i=1:size(log_data_zvalue,1)
             [log_data_artificialDoublets,~,~,~]=generateAD(seedNumber,randSize,clustering,clusterSelect,log_data_zvalue(i,:),clustering_name_unique);

@@ -15,11 +15,11 @@ load 'mouseEmbryoPIC.mat'
 %           4 - E7.5 doublets, 5 - E8.5 doublets, 6 - E9.5 doublets
 clusterSize=max(clustering13color);
 log_data_doublets=log_data_total(:,doubletsIndex);
-%%%%%%%%%%%%% ---- Pipeline for clustering13 (E7.5) ---- %%%%%%%%%%%%%
-folderName='mouseEmbryoE7.5';
-log_data=log_data(:,sample_type_color(singletsIndex)==4);
-clustering13color=clustering13color(sample_type_color(singletsIndex)==4);
-log_data_doublets=log_data_doublets(:,sample_type_color(doubletsIndex)==1);
+%%%%%%%%%%%%% ---- Pipeline for clustering13 (E8.5) ---- %%%%%%%%%%%%%
+folderName='mouseEmbryoE8.5';
+log_data=log_data(:,sample_type_color(singletsIndex)==5);
+clustering13color=clustering13color(sample_type_color(singletsIndex)==5);
+log_data_doublets=log_data_doublets(:,sample_type_color(doubletsIndex)==2);
 %%%%%%%%%%%%% Calculating z-value %%%%%%%%%%%%%
 log_data_zvalue=(log_data-repmat(mean(log_data,2),1,size(log_data,2)))./repmat(std(log_data')',1,size(log_data,2));
 log_data_doublets_zvalue=(log_data_doublets-repmat(mean(log_data_doublets,2),1,size(log_data_doublets,2)))./repmat(std(log_data_doublets')',1,size(log_data_doublets,2));
@@ -32,15 +32,15 @@ log_data_doublets_zvalue(isnan(log_data_doublets_zvalue))=0;
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
-clusterSelect=[3,7,9,11,12,13];
+clusterSelect=[1,2,3,5,6,9,10];
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=5000;
-DEGnumber=10;
+DEGnumber=5;
 [bestMatch,artificialDoubletsCombiUnique,SVMcl]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber);
 CV_SVMcl=crossval(SVMcl);
 genError = kfoldLoss(CV_SVMcl)
-save([folderName,'/SVM_bestMatch_DEG10.mat'],'bestMatch','artificialDoubletsCombiUnique','SVMcl','CV_SVMcl','genError')
+save([folderName,'/SVM_bestMatch.mat'],'bestMatch','artificialDoubletsCombiUnique','SVMcl','CV_SVMcl','genError')
 
 %%% Draw heatmap
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])

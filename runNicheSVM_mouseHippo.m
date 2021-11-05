@@ -13,7 +13,7 @@ load 'mouseHippoSlide200115.mat'
 % 11. 'clustering13name' - 33034 cells
 % 12. 'clustering13name_unique' - 6 cell types
 % 13. 'singletsIndex' - 33034 Boolean memberships for single cells
-% 13. 'doubletsIndex' - 33034 Boolean memberships for PICs
+% 14. 'doubletsIndex' - 33034 Boolean memberships for PICs
 log_data_total=log_data;
 log_data=log_data_total(:,singletsIndex);
 cell_id_total=cell_id;

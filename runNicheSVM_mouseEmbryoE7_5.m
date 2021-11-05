@@ -36,11 +36,11 @@ clusterSelect=[3,7,9,11,12,13];
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=5000;
-DEGnumber=10;
+DEGnumber=5;
 [bestMatch,artificialDoubletsCombiUnique,SVMcl]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber);
 CV_SVMcl=crossval(SVMcl);
 genError = kfoldLoss(CV_SVMcl)
-save([folderName,'/SVM_bestMatch_DEG10.mat'],'bestMatch','artificialDoubletsCombiUnique','SVMcl','CV_SVMcl','genError')
+save([folderName,'/SVM_bestMatch.mat'],'bestMatch','artificialDoubletsCombiUnique','SVMcl','CV_SVMcl','genError')
 
 %%% Draw heatmap
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
