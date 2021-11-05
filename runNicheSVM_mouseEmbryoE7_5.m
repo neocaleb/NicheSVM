@@ -39,30 +39,34 @@ seedNumber=1;randSize=5000;
 DEGnumber=5;
 [bestMatch,artificialDoubletsCombiUnique,SVMcl]=NicheSVM(pvalue_total,pCutoff,logRatio_total,lrCutoff,seedNumber,randSize,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,log_data_doublets_zvalue,DEGnumber);
 CV_SVMcl=crossval(SVMcl);
-genError = kfoldLoss(CV_SVMcl)
+genError = kfoldLoss(CV_SVMcl);
 save([folderName,'/SVM_bestMatch.mat'],'bestMatch','artificialDoubletsCombiUnique','SVMcl','CV_SVMcl','genError')
 
 %%% Draw heatmap
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
-clusterSelect=[1,2,3,5,6,7,8,9,10,11,12,13];
 outputFile=[folderName,'/heatmap_PICSVM_top5DEG.pdf'];
 pCutoff=0.01;lrCutoff=0.4;
 DEGnumber=5;
 drawHeatmap_PICSVM(outputFile,bestMatch,artificialDoubletsCombiUnique,clusterSelect,clustering13name_unique,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,gene_name,DEGnumber);
 
 %%%%%%%%%%%%% 3) DEG between PICs and artificial doublets %%%%%%%%%%%%%
-clusterSelect=[1,2,3,5,6,7,8,9,10,11,12,13];
 seedNumber=1;randSize=10000;
 minCell=5;
 [pvalue_total,fdr_total,logRatio_total]=DEG_PIC_vs_AD(bestMatch,seedNumber,randSize,clustering13color,clusterSelect,log_data_zvalue,clustering13name_unique,log_data_doublets_zvalue,minCell);
 save([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'],'pvalue_total','fdr_total','logRatio_total')
 
-outputFolder=[folderName,'/heatmapPIC_vs_AD'];
+outputFolder=folderName;
 load([folderName,'/pvalue_fdr_logRatio_PIC_vs_AD.mat'])
 pvalue_totalPIC_AD=pvalue_total;
 logRatio_totalPIC_AD=logRatio_total;
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
+%%% Save DEG lists
+DEGlists_PIC_vs_AD(outputFolder,bestMatch,artificialDoubletsCombiUnique,pCutoff,lrCutoff,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name);
+%%% boxplots for observed and expected expression of the neighbor-specific markers and cell type markers
 DEGnumber=5;DEGnumberPIC_AD=10;
-drawHeatmap_PIC_vs_AD(outputFolder,bestMatch,artificialDoubletsCombiUnique,clustering13color,clusterSelect,clustering13name_unique,log_data_zvalue,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name,DEGnumber,DEGnumberPIC_AD);
+drawBoxplot_PIC_vs_AD(seedNumber,randSize,outputFolder,bestMatch,artificialDoubletsCombiUnique,clustering8color,clusterSelect,clustering8name_unique,log_data_zvalue,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name,DEGnumber,DEGnumberPIC_AD);
+%%% heatmaps for the neighbor-specific markers and cell type markers
+DEGnumber=5;DEGnumberPIC_AD=10;
+drawHeatmap_PIC_vs_AD(outputFolder,bestMatch,artificialDoubletsCombiUnique,clustering8color,clusterSelect,clustering8name_unique,log_data_zvalue,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_doublets_zvalue,pvalue_totalPIC_AD,logRatio_totalPIC_AD,gene_name,DEGnumber,DEGnumberPIC_AD);
 
