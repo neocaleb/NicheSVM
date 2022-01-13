@@ -29,6 +29,8 @@ log_data_doublets_zvalue(isnan(log_data_doublets_zvalue))=0;
 %%%%%%%%%%%%% 1) DEG by clustering 13 %%%%%%%%%%%%%
 [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering13color);
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
+drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
 clusterSelect=[1,2,3,5,6,9,10];

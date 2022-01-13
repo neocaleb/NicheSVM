@@ -45,6 +45,8 @@ folderName='liverPairedNormalized';
 clusterSize=max(clustering8color);
 [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering8color);
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+pCutoff=0.01;lrCutoff=0.3;DEGnumber=5;
+drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])

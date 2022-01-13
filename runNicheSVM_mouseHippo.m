@@ -43,7 +43,7 @@ pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
 drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
-clusterSelect=[2,3,4,5,6];
+clusterSelect=[2,3,4,5,6]; % You can choose the clusters with DEGs (See the heatmaps for the cell type DEGs)
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=10000;
@@ -85,7 +85,7 @@ pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
 drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
-clusterSelect=[2,3,4,5,6,7,8];
+clusterSelect=[2,3,4,5,6,7,8]; % You can choose the clusters with DEGs (See the heatmaps for the cell type DEGs)
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=10000;
@@ -127,7 +127,7 @@ pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
 drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
-clusterSelect=[2,4,5,6,8,9,10,11,12,13];
+clusterSelect=[2,4,5,6,8,9,10,11,12,13]; % You can choose the clusters with DEGs (See the heatmaps for the cell type DEGs)
 load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.4;
 seedNumber=1;randSize=10000;
