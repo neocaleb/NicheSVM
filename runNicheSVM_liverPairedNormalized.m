@@ -51,7 +51,7 @@ load([folderName,'/pvalue_fdr_logRatio_zvalue.mat'])
 pCutoff=0.01;lrCutoff=0.3;
 DEGindex=zeros(size(gene_name,1),clusterSize);
 for clusterIndex=1:clusterSize
-    cellIndexTemp=find(clustering8color==clusterIndex);
+    cellIndexTemp=find(clustering6color==clusterIndex);
     DEGindex(:,clusterIndex)=pvalue_total{clusterIndex}<pCutoff & logRatio_total{clusterIndex}>lrCutoff;
 end
 DEGindexOnly=zeros(size(gene_name,1),clusterSize);

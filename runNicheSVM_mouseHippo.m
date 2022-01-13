@@ -39,6 +39,8 @@ folderName='mouseHippo_SeuratCluster6';
 clusterSize=max(clustering6color);
 [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering6color);
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
+drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
 clusterSelect=[2,3,4,5,6];
@@ -79,6 +81,8 @@ folderName='mouseHippo_SeuratCluster8';
 clusterSize=max(clustering8color);
 [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering8color);
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
+drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
 clusterSelect=[2,3,4,5,6,7,8];
@@ -119,6 +123,8 @@ folderName='mouseHippo_SeuratCluster13';
 clusterSize=max(clustering13color);
 [pvalue_total,fdr_total,logRatio_total,zvalue_total]=DEG_ranksum4cluster(clusterSize,log_data,clustering13color);
 save([folderName,'/pvalue_fdr_logRatio_zvalue.mat'],'pvalue_total','fdr_total','logRatio_total','zvalue_total')
+pCutoff=0.01;lrCutoff=0.4;DEGnumber=5;
+drawHeatmap_DEG(folderName,clustering6color,pvalue_total,pCutoff,logRatio_total,lrCutoff,log_data_zvalue,gene_name,DEGnumber)
 
 %%%%%%%%%%%%% 2) PIC SVM classification %%%%%%%%%%%%%
 clusterSelect=[2,4,5,6,8,9,10,11,12,13];
