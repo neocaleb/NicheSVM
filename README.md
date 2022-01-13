@@ -1,6 +1,10 @@
 # NicheSVM
 
 NicheSVM is a tool for analyzing PICs (Physically Interacting Cells) to detect niche-specific expression.
+Step1 - Calculating z-values
+Step2 - Finding cell type DEGs and drawing heatmaps
+Step3 - Deconvolution *Note that you should choose the clusters with unique DEGs (see the figure heatmap_clusterOnly~.pdf)
+Step4 - Finding neighbor-specific DEGs
 
 ## Example
 
